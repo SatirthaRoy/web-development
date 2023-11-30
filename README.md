@@ -1,2 +1,2 @@
 # web-development
-here i codes that i learn and practice.
+here i put codes that i learn and practice.
