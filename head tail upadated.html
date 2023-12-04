@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>head tail game updated</title>
+  <style>
+    body {
+      font-family: sans-serif;
+    }
+  </style>
+</head>
+<body>
+  <button onclick="checMove('HEAD')">head</button>
+  <button onclick="checMove('TAIL')">tail</button>
+  <p class="js-result"></p>
+  <p>
+    <style type="text/css">
+      .tg  {border-collapse:collapse;border-spacing:0;}
+      .tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+        overflow:hidden;padding:10px 5px;word-break:normal;}
+      .tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+        font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+      .tg .tg-c3ow{border-color:inherit;text-align:center;vertical-align:top}
+      .tg .tg-7btt{border-color:inherit;font-weight:bold;text-align:center;vertical-align:top}
+      </style>
+      <table class="tg">
+      <thead>
+        <tr>
+          <th class="tg-7btt">Wins</th>
+          <th class="tg-c3ow"><span style="font-weight:bold">Loses</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="tg-c3ow" id="js-wins"></td>
+          <td class="tg-c3ow" id="js-losses"></td>
+        </tr>
+      </tbody>
+      </table>
+      <p>
+        <button onclick="resetScore()">Reset Score</button>
+      </p>
+    
+  </p>
+
+  <script>
+
+    // 0 means head 1 means tail
+
+    let randomNum;
+    let move;
+    let headOrTail;
+    let resutlMsg = '';
+    let winMsg = '';
+
+    let score = JSON.parse(localStorage.getItem('score')) || {
+      win : 0,
+      lose : 0
+    };
+    
+    
+
+
+
+    function generateRandom () {
+      randomNum = Math.round(Math.random() * 10);
+      randomNum < 2 || generateRandom();
+    }
+
+    function checMove (x) {
+      generateRandom();
+      move = x;
+      randomNum == 0 ? headOrTail = 'HEAD' : headOrTail = 'TAIL';
+      if(move === headOrTail) {
+        score.win++;
+        winMsg = 'YOU WON';
+      }
+      else {
+        score.lose++;
+        winMsg = 'YOU LOSE';
+      }
+      resutlMsg = `${move} || ${headOrTail}`;
+      updateHtml();
+    }
+
+    function resetScore (){
+      score.win = 0;
+      score.lose = 0;
+      localStorage.removeItem('score');
+      updateHtml();
+      save();
+    }
+
+    function save() {
+      localStorage.setItem('score', JSON.stringify(score));
+    }
+
+    function updateHtml() {
+      document.querySelector('#js-wins').innerHTML = score.win;
+      document.querySelector('#js-losses').innerHTML = score.lose;
+      document.querySelector('.js-result').innerHTML = `${resutlMsg}
+<h3>${winMsg}</h3>`;
+      save();
+    }
+
+
+    updateHtml();
+  </script>
+</body>
+</html>
