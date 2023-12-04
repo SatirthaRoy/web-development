@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DOM</title>
+</head>
+<body>
+  <button>hello</button>
+  <div>
+    <button id="bitch-button">bitch</button>
+  </div>
+
+
+  <script>
+    /*
+    document.body.innerHTML = '<h1>magi</h1>';
+    document.title = 'khanki magi';
+    */
+
+    console.log(document.body);
+    console.log(document.querySelector('button'));
+    document.querySelector('button').innerHTML = 'hello'; // every html obj has a property innerHTML
+    console.log(document.querySelector('button').innerHTML);
+    console.log(document.querySelector('div').querySelector('button').innerHTML);
+    document.querySelector('div').querySelector('button').innerHTML = 'khanki';
+    const button = document.querySelector('#bitch-button'); // use . in the beginning to select class and # to select id
+    console.log(button);
+
+  </script>
+</body>
+</html>
