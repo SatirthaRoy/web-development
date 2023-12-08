@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>calculator</title>
+
+  <style>
+    div {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: repeat(5, 1fr);
+      grid-column-gap: 10px;
+      grid-row-gap: 10px;
+    }
+
+    p {
+      height: 25px;
+    }
+  </style>
+</head>
+<body>
+  <p></p>
+  <div>
+    <button onclick="AddToCalc(1)">1</button>
+    <button onclick="AddToCalc(2)">2</button>
+    <button onclick="AddToCalc(3)">3</button>
+    <button onclick="setOp('+')">+</button>
+    <button onclick="AddToCalc(4)">4</button>
+    <button onclick="AddToCalc(5)">5</button>
+    <button onclick="AddToCalc(6)">6</button>
+    <button onclick="setOp('-')">-</button>
+    <button onclick="AddToCalc(7)">7</button>
+    <button onclick="AddToCalc(8)">8</button>
+    <button onclick="AddToCalc(9)">9</button>
+    <button onclick="setOp('*')">*</button>
+    <button onclick="AddToCalc(0)">0</button>
+    <button onclick="AddToCalc('.')">.</button>
+    <button onclick="calculate()">=</button>
+    <button onclick="setOp('/')">/</button>
+    <button onclick="Clear()">Clear</button>
+  </div>
+  
+
+  <script>
+    let str = '';
+    let result;
+    let a;
+    let b;
+    let operator;
+
+    function updateHtml () {
+      document.querySelector('p').innerHTML = str;
+    }
+
+    function Clear() {
+      console.log('cleared');
+      str = '';
+      updateHtml();
+    }
+
+    function AddToCalc(x) {
+      if(typeof str == 'number') {
+        Clear();
+        str += x;
+      } else {
+        str += x;
+      }
+      console.log('str = '+ str);
+      updateHtml();
+    }
+
+    function setab () {
+      if(!a) {
+        a = Number(str);
+        str = '';
+      } else {
+        b = Number(str);
+        str = '';
+      }
+      console.log(`a = ${a} b = ${b}`);
+    }
+
+    function setOp(op) {
+      if(!operator) {
+        operator = op;
+        console.log('operator has set to ' + op);
+        setab();
+      } else {
+        console.log('operator has set to ' + op);
+        continuousCalc();
+        operator = op;
+      }
+      
+    }
+
+    function calculation () {
+      switch(operator) {
+        case '+':
+          a += b;
+          b = null;
+          break;
+        case '-':
+          a -= b;
+          b = null;
+          break;
+        case '*':
+          a = a * b;
+          b = null;
+          break;
+        case '/':
+          a /= b;
+          b = null;
+          break;
+      }
+      return Number.isInteger(a) ?  a : a.toFixed(2) ;
+    }
+
+    function calculate () {
+      setab();
+      result = calculation();
+      str = result;
+      console.log('calculate ' + result);
+      a = null;
+      operator = null;
+      updateHtml();
+
+    }
+
+    function continuousCalc () {
+      setab();
+      result = calculation();
+      str = result;
+      updateHtml();
+      console.log('continuous calculation '+result); // fix here
+    }
+
+  </script>
+</body>
+</html>
