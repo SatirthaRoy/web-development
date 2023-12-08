@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>rock paper scissors</title>
+
+  <style>
+    body { 
+      background-color: rgb(232, 232, 232);
+      font-family: Arial;
+      color: rgb(35, 35, 35);
+    }
+
+    p {
+      margin: 50px 0px;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .heading {
+      font-size: 35px;
+      padding: 15px 0px;
+    }
+
+    .move {
+      height: 50px;
+    }
+
+    .move-button {
+      background: transparent;
+      height: 140px;
+      width: 140px;
+      border: 6px solid rgb(182, 181, 181);
+      border-radius: 100px;
+      margin: 5px;
+      cursor: pointer;
+    }
+
+    .move-of-result {
+      height: 70px
+    }
+
+    .reset-button {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: medium;
+      border: none;
+      background-color: rgb(35, 35, 35);
+      color: rgb(232, 232, 232);
+      padding: 15px 15px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1 class="heading">Rock, Paper, Scissors Game</h1>
+
+  <button class="move-button" onclick="CheckMove(1)"><img class="move" src="https://supersimple.dev/projects/rock-paper-scissors/images/rock-emoji.png" alt="rock"></button>
+  <button class="move-button" onclick="CheckMove(3)"><img class="move" src="https://supersimple.dev/projects/rock-paper-scissors/images/paper-emoji.png" alt="rock"></button>
+  <button class="move-button" onclick="CheckMove(5)"><img class="move" src="https://supersimple.dev/projects/rock-paper-scissors/images/scissors-emoji.png" alt="rock"></button>
+
+  <p class="js-win-message"></p>
+  <p class="js-scoreTable">
+    <style type="text/css">
+      .tg  {border-collapse:collapse;border-spacing:0;}
+      .tg td{border-color:rgb(35, 35, 35);border-style:solid;border-width:1px;font-family:Arial;font-size:14px;
+        overflow:hidden;padding:10px 5px;word-break:normal;}
+      .tg th{border-color:rgb(35, 35, 35);border-style:solid;border-width:1px;font-family:Arial;font-size:14px;
+        font-weight:normal;overflow:hidden;padding:10px 25px;word-break:normal;}
+      .tg .tg-c3ow{border-color:inherit;text-align:center;vertical-align:top}
+      .tg .tg-7btt{border-color:inherit;font-weight:bold;text-align:center;vertical-align:top}
+      </style>
+      <table class="tg">
+      <thead>
+        <tr>
+          <th class="tg-7btt">Wins</th>
+          <th class="tg-c3ow"><span style="font-weight:bold">Losses</span></th>
+          <th class="tg-c3ow"><span style="font-weight:bold">Draws</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="tg-c3ow" id="js-win"></td>
+          <td class="tg-c3ow" id="js-lose"></td>
+          <td class="tg-c3ow" id="js-draw"></td>
+        </tr>
+      </tbody>
+      </table>
+  </p>
+  
+  <button class="reset-button" onclick="resetGame()">Reset Score</button>
+  
+
+  
+
+  <script>
+    /*
+      for computer
+      0 1 = rock 
+      2 3 = paper
+      4 5 = scissors
+      for player
+      1 = rock
+      3 = paper
+      5 = scissors
+    */
+
+    let randomNum = 0;
+
+    let score = JSON.parse(localStorage.getItem('score'));
+    score = score || { win: 0, lose: 0, draw: 0 };
+    let winMessage = '';
+    let playerMove;
+    let computerMove;
+    let playerMoveUrl;
+    let computerMoveUrl
+
+
+    function GenerateRandom() {
+      randomNum = Math.round(Math.random() * 10);
+      randomNum >= 5 && GenerateRandom();
+    }
+
+    function CheckMove(x) {
+      GenerateRandom();
+      if(x == 1) {
+        if(randomNum == 0 || randomNum == 1) {
+          playerMove = 'Rock';
+          computerMove = 'Rock';
+          winMessage = 'Draw';
+          score.draw++;
+        }
+
+        if(randomNum == 2 || randomNum == 3) {
+          playerMove = 'Rock';
+          computerMove = 'Paper';
+          winMessage = 'You Lost';
+          score.lose++;
+        }
+
+        if(randomNum == 4 || randomNum == 5) {
+          playerMove = 'Rock';
+          computerMove = 'Scissors';
+          winMessage = 'You Won';
+          score.win++;
+        }
+
+      }
+
+      if(x == 3) {
+        if(randomNum == 0 || randomNum == 1) {
+          playerMove = 'Paper';
+          computerMove = 'Rock';
+          winMessage = 'You Won';
+          score.win++;;
+        }
+
+        if(randomNum == 2 || randomNum == 3) {
+          playerMove = 'Paper';
+          computerMove = 'Paper';
+          score.draw++;
+          winMessage = 'Draw';
+        }
+
+        if(randomNum == 4 || randomNum == 5) {
+          playerMove = 'Paper';
+          computerMove = 'Scissors';
+          winMessage = 'You Lost';
+          score.lose++;
+        }
+
+      }
+
+      if(x == 5) {
+        if(randomNum == 0 || randomNum == 1) {
+          playerMove = 'Scissors';
+          computerMove = 'Rock';
+          winMessage = 'You Lost';
+          score.lose++;
+        }
+
+        if(randomNum == 2 || randomNum == 3) {
+          playerMove = 'Scissors';
+          computerMove = 'Paper';
+          winMessage = 'You Won';
+          score.win++;
+        }
+
+        if(randomNum == 4 || randomNum == 5) {
+          playerMove = 'Scissors';
+          computerMove = 'Scissors';
+          winMessage = 'Draw';
+          score.draw++;
+        }
+
+      }
+      setScore();
+      showScoreAndWinMessage();
+
+    }
+
+    function resetGame() {
+      score.win = 0;
+      score.lose = 0;
+      score.draw = 0;
+      setScore();
+      showScoreAndWinMessage()
+    }
+
+    function setScore () {
+      localStorage.setItem('score', JSON.stringify(score));
+    }
+
+    function selectURL(move) {
+      switch(move) {
+        case 'Rock':
+          return "https://supersimple.dev/projects/rock-paper-scissors/images/rock-emoji.png";
+          break;
+        case 'Paper':
+          return "https://supersimple.dev/projects/rock-paper-scissors/images/paper-emoji.png";
+          break;
+        default:
+          return "https://supersimple.dev/projects/rock-paper-scissors/images/scissors-emoji.png";
+      }
+    }
+
+    function showScoreAndWinMessage() {
+      playerMoveUrl = selectURL(playerMove);
+      computerMoveUrl = selectURL(computerMove);
+      if(playerMove) {
+        document.body.querySelector('.js-win-message').innerHTML = `<p>You  <img class = "move-of-result" src = ${playerMoveUrl}>  <img class = "move-of-result" src = ${computerMoveUrl}>  Computer</p>
+<h2 class = "win-message">${winMessage}</h2>`;
+      }
+      
+      document.body.querySelector('#js-win').innerHTML = score.win;
+      document.body.querySelector('#js-lose').innerHTML = score.lose;
+      document.body.querySelector('#js-draw').innerHTML = score.draw;
+    }
+
+    showScoreAndWinMessage()
+  </script>
+</body>
+</html>
