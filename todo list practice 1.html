@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>tood list practice 1</title>
+</head>
+<body>
+  <input type="text" placeholder="todo name" onkeydown="keydown(event)">
+  <button onclick="addtoarr()">Add</button>
+  
+  <script>
+    let arr = [];
+    function addtoarr () {
+      arr.push(document.querySelector('input').value);
+      document.querySelector('input').value = '';
+      console.log(arr);
+    }
+
+    function keydown (event) {
+      event.key == 'Enter' && addtoarr();
+    }
+  </script>
+</body>
+</html>
