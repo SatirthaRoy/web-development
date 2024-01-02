@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Todo List</title>
+
+  <style>
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    button {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: large;
+      color: white;
+      border: none;
+      height: 50px;
+      width: 128px;
+      cursor: pointer;
+    }
+
+    .add {
+      background-color: green;
+    }
+
+    .delete {
+      margin-left: 10px;
+      background-color: rgb(162, 0, 0);
+    }
+
+    .todo{
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: large;
+      height: 32px;
+      width: 200px;
+      margin-right: 5px;
+      padding: 5px;
+    }
+
+    .todo-container {
+      margin-top: 20px;
+      display: flex;
+    }
+
+    .todos-task {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: large;
+      line-height: 32px;
+      width: 200px;
+      margin-right: 10px;
+      padding: 5px;
+    }
+
+    .todos-date {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: large;
+      line-height: 32px;
+      width: 200px;
+      margin-right: 5px;
+      padding: 5px;
+    }
+    
+  </style>
+</head>
+<body>
+  <h1>Todo List</h1>
+  <input type="text" placeholder="Todo name" onkeydown="keydown(event)" class="todo todo-task">
+  <input type="date" class="todo todo-date" onkeydown="keydown(event)">
+  <button onclick="addtoarr()" class="add">Add</button>
+  <div class = 'todos'>
+  </div>
+  
+  
+  <script>
+    let todo = JSON.parse(localStorage.getItem('todo')) || [];
+    function addtoarr () {
+      todo.push({task : document.querySelector('.todo-task').value, date: document.querySelector('.todo-date').value, id: new Date().getTime()});
+      document.querySelector('.todo-task').value = '';
+      document.querySelector('.todo-date').value = '';
+      console.log(todo);
+      addtodo();
+    }
+
+    function deletetodoArr (id) {
+      todo = todo.filter(element => {
+        return id == element.id ? false : true;
+      });
+      addtodo();
+    }
+
+    function keydown (event) {
+      event.key == 'Enter' && addtoarr();
+    }
+
+    function addtodo () { // this function renders
+      document.querySelector('div').innerHTML = '';
+      todo.forEach(element => {
+        let taskContainer = document.createElement('div');
+        taskContainer.innerHTML = `<div class="todos-task">${element.task}</div> <div class="todos-date">${element.date}</div><button class = 'delete' onclick = 'deletetodoArr(${element.id})'>Delete
+          </button>
+        `;
+        taskContainer.classList.add('todo-container');
+        document.querySelector('.todos').append(taskContainer);
+        
+      });
+      saveTodos();
+    }
+
+    function saveTodos () {
+      localStorage.setItem('todo', JSON.stringify(todo));
+    }
+
+    addtodo();
+  </script>
+</body>
+</html>

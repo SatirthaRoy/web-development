@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>rock paper scissors</title>
+</head>
+<body>
+  <h3>Rock, Paper, scissors Game</h3>
+
+  <button onclick="CheckMove(1)">rock</button>
+  <button onclick="CheckMove(3)">paper</button>
+  <button onclick="CheckMove(5)">scissors</button>
+  <P>
+    <button onclick="alert(`wins = ${win}\nlose = ${lose}`)">Show Score</button>
+  </p>
+
+  <script>
+    /*
+      for computer
+      0 1 = rock 
+      2 3 = paper
+      4 5 = scissors
+      for player
+      1 = rock
+      3 = paper
+      5 = scissors
+    */
+
+    let randomNum = 0;
+    let win = 0;
+    let lose = 0;
+    let wonGame = false;
+  
+
+    function GenerateRandom() {
+      randomNum = Math.round(Math.random() * 10);
+      if(randomNum <= 5) {
+        console.log(randomNum);
+      } else {
+        GenerateRandom();
+      }
+    }
+
+    function CheckMove(x) {
+      GenerateRandom();
+      if(x == 1) {
+        if(randomNum == 0 || randomNum == 1) {
+          alert('-Player Rock\n-computer Rock.\nMatch Draw');
+        }
+
+        if(randomNum == 2 || randomNum == 3) {
+          alert('-Player Rock\n-computer Paper.\nYou Lose.');
+          wonGame = false;
+          lose++;
+        }
+
+        if(randomNum == 4 || randomNum == 5) {
+          alert('-Player Rock\n-computer scissors.\nYou Won.');
+          wonGame = true;
+          win ++;
+        }
+
+      }
+
+      if(x == 3) {
+        if(randomNum == 0 || randomNum == 1) {
+          alert('-Player Paper\n-computer Rock.\nYou Won');
+          wonGame = true;
+          win++;
+        }
+
+        if(randomNum == 2 || randomNum == 3) {
+          alert('-Player Paper\n-computer Paper.\nMatch Draw.');
+          wonGame = false;
+        }
+
+        if(randomNum == 4 || randomNum == 5) {
+          alert('-Player Paper\n-computer scissors.\nYou Lose.');
+          wonGame = false;
+          lose++;
+        }
+
+      }
+
+      if(x == 5) {
+        if(randomNum == 0 || randomNum == 1) {
+          alert('-Player Scissors\n-computer Rock.\nYou Lose');
+          wonGame = false;
+          lose ++;
+        }
+
+        if(randomNum == 2 || randomNum == 3) {
+          alert('-Player Scissors\n-computer Paper.\nYou Won.');
+          wonGame = true;
+          win++;
+        }
+
+        if(randomNum == 4 || randomNum == 5) {
+          alert('-Player Scissors\n-computer scissors.\nMatch Draw.');
+          wonGame = false;
+        }
+
+      }
+
+    }
+
+
+  </script>
+</body>
+</html>

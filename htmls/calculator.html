@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>calculator</title>
+</head>
+<body>
+  <button onclick="AddToCalc(1)">1</button>
+  <button onclick="AddToCalc(2)">2</button>
+  <button onclick="AddToCalc(3)">3</button>
+  <button onclick="Plus()">+</button>
+  <button onclick="Result()">=</button>
+
+  <script>
+    let calculation1 = 0;
+    let calculation2 = '';
+
+    function AddToCalc(x) {
+      calculation2 += x;
+      console.log(calculation2);
+    }
+
+    function Plus () {
+      calculation1 += Number(calculation2);
+      calculation2 = '';
+    }
+
+    function Result() {
+      Plus();
+      alert('Result = ' + calculation1);
+      calculation1 = 0;
+    }
+
+  </script>
+</body>
+</html>

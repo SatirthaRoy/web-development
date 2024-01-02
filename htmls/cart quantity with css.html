@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cart Quantity</title>
+  <style>
+    body{
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    button {
+      font-size: medium;
+      font-weight: 400;
+      color: black;
+      background-color: yellow;
+      border: none;
+      border-radius: 15px;
+      padding: 5px 20px;
+      margin: 10px;
+
+    }
+
+  </style>
+</head>
+<body>
+  <button onclick="quantityCount(1)">Add to Cart</button>
+  <button onclick="quantityCount(2)">+2</button>
+  <button onclick="quantityCount(3)">+3</button>
+  <button onclick="quantityCount(4)">+4</button>
+  <button onclick="quantityCount(5)">+5</button>
+  <button onclick="quantityCount(-1)">Remove from cart</button>
+  <button onclick="quantityCount(-2)">-2</button>
+  <button onclick="quantityCount(-3)">-3</button>
+
+  <p></p>
+
+
+  <script>
+    let quantity = 0;
+
+    function quantityCount(x) {
+      quantity += (quantity += x) >= 0 && x;
+      updateCart();
+    }
+
+    function updateCart() {
+      document.querySelector('p').innerHTML = `Cart quantity: ${quantity}`;
+    }
+  </script>
+</body>
+</html>
